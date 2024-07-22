@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "Root",
+      "path": "."
+    },
+    {
+      "name": "Library: dotnet",
+      "path": "retech-library-dotnet"
+    },
+    {
+      "name": "Plugin: Rust",
+      "path": "retech-plugin-rust"
+    }
+  ]
+}
