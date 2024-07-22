@@ -11,6 +11,10 @@
     {
       "name": "Plugin: Rust",
       "path": "retech-plugin-rust"
+    },
+    {
+      "name": "Sample: dotnet",
+      "path": "retech-sample-dotnet"
     }
   ]
 }

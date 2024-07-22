@@ -2,13 +2,13 @@ using System.IO;
 
 namespace RetechLibrary.Network;
 
-public class BinaryPacket
+public class Packet
 {
     private readonly MemoryStream _stream;
     private readonly BinaryWriter _writer;
     private readonly BinaryReader _reader;
 
-    public BinaryPacket(byte[]? bytes = null)
+    public Packet(byte[]? bytes = null)
     {
         _stream = new MemoryStream();
         _writer = new BinaryWriter(_stream);

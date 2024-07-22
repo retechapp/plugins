@@ -11,3 +11,9 @@
 | Name                 | Description                            |
 | -------------------- | -------------------------------------- |
 | `retech-plugin-rust` | Harmony mod for dedicated Rust servers |
+
+## Samples
+
+| Name                   | Description |
+| ---------------------- | ----------- |
+| `retech-sample-dotnet` | Playground  |
