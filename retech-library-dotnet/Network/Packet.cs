@@ -31,12 +31,12 @@ public class Packet
     public uint ReadUInt32() => _reader.ReadUInt32();
 
     public void WriteUInt64(ulong value) => _writer.Write(value);
-    public void ReadUInt64() => _reader.ReadUInt64();
+    public ulong ReadUInt64() => _reader.ReadUInt64();
 
     public void WriteFloat(float value) => _writer.Write(value);
     public float ReadFloat() => _reader.ReadSingle();
 
-    public void WriteVarBytes(byte[] value)
+    public void WriteBytes(byte[] value)
     {
         if (value.Length == 0)
         {
@@ -48,7 +48,7 @@ public class Packet
         _writer.Write(value, 0, value.Length);
     }
 
-    public byte[] ReadVarBytes()
+    public byte[] ReadBytes()
     {
         uint size = ReadUInt32();
 
@@ -60,18 +60,18 @@ public class Packet
         return _reader.ReadBytes((int)size);
     }
 
-    public void WriteVarString(string value)
+    public void WriteString(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
-            WriteVarBytes([]);
+            WriteBytes([]);
             return;
         }
 
-        WriteVarBytes(System.Text.Encoding.UTF8.GetBytes(value));
+        WriteBytes(System.Text.Encoding.UTF8.GetBytes(value));
     }
 
-    public void ReadVarString() => System.Text.Encoding.UTF8.GetString(ReadVarBytes());
+    public string ReadString() => System.Text.Encoding.UTF8.GetString(ReadBytes());
 
     public byte[] ToArray() => _stream.ToArray();
 
