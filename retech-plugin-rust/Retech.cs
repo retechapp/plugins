@@ -43,7 +43,7 @@ public class Retech : IDisposable
         Logger.Info("Disconnected (reconnecing in 15 seconds)");
 
         await Task.Delay(15_000);
-        await _webSocketClient.ConnectAsync(new Uri("ws://localhost:3030"));
+        await _webSocketClient.ConnectAsync(new Uri(config.Worker));
     }
 
     public void OnError(Exception exception)
