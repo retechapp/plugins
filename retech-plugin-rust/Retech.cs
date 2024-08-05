@@ -59,7 +59,14 @@ public class Retech : IDisposable
 
     public void OnPacketReceived(Packet packet)
     {
-        //
+        ushort packetId = packet.ReadUInt16();
+
+        switch (packetId)
+        {
+            default:
+                Logger.Warning($"Received an unknown packet id: {packetId}");
+                break;
+        }
     }
 
     public void SendPacket(Packet packet)
