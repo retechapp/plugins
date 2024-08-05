@@ -21,6 +21,11 @@ public class WebSocketClient : IDisposable
 
     public void Dispose()
     {
+        if (_clientWebSocket != null)
+        {
+            _clientWebSocket.Dispose();
+        }
+
         GC.SuppressFinalize(this);
     }
 

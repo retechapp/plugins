@@ -24,16 +24,20 @@ public class SendPlayerTick
         ulong steamId = basePlayer.userID.Get();
 
         if (!playerTickUpdates.TryGetValue(steamId, out PlayerTickUpdate playerTickUpdate))
-            playerTickUpdates.Add(steamId, new PlayerTickUpdate(Time.time, basePlayer.transform.position, basePlayer.transform.rotation.eulerAngles, basePlayer.estimatedVelocity));
+        {
+            playerTickUpdate = new PlayerTickUpdate(Time.time, basePlayer.transform.position, basePlayer.tickViewAngles, basePlayer.estimatedVelocity);
+            playerTickUpdates.Add(steamId, playerTickUpdate);
+        }
 
-        if (playerTickUpdate.lastTime - Time.time < 0.2f)
+        if (Time.time - playerTickUpdate.lastTime < 0.2f)
             return;
 
-        if (playerTickUpdate.lastPosition == basePlayer.transform.position && playerTickUpdate.lastRotation == basePlayer.transform.rotation.eulerAngles && playerTickUpdate.lastVelocity == basePlayer.estimatedVelocity)
+        if (playerTickUpdate.lastPosition == basePlayer.transform.position && playerTickUpdate.lastRotation == basePlayer.tickViewAngles && playerTickUpdate.lastVelocity == basePlayer.estimatedVelocity)
             return;
 
+        playerTickUpdate.lastTime = Time.time;
         playerTickUpdate.lastPosition = basePlayer.transform.position;
-        playerTickUpdate.lastRotation = basePlayer.transform.rotation.eulerAngles;
+        playerTickUpdate.lastRotation = basePlayer.tickViewAngles;
         playerTickUpdate.lastVelocity = basePlayer.estimatedVelocity;
 
         Packet packet = new();
@@ -43,9 +47,9 @@ public class SendPlayerTick
         packet.WriteFloat(basePlayer.transform.position.x);
         packet.WriteFloat(basePlayer.transform.position.y);
         packet.WriteFloat(basePlayer.transform.position.z);
-        packet.WriteFloat(basePlayer.transform.rotation.x);
-        packet.WriteFloat(basePlayer.transform.rotation.y);
-        packet.WriteFloat(basePlayer.transform.rotation.z);
+        packet.WriteFloat(basePlayer.tickViewAngles.x);
+        packet.WriteFloat(basePlayer.tickViewAngles.y);
+        packet.WriteFloat(basePlayer.tickViewAngles.z);
         packet.WriteFloat(basePlayer.estimatedVelocity.x);
         packet.WriteFloat(basePlayer.estimatedVelocity.y);
         packet.WriteFloat(basePlayer.estimatedVelocity.z);

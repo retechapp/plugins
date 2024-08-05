@@ -13,6 +13,8 @@ public class Retech : IDisposable
 
     public Retech()
     {
+        Logger.Setup();
+
         config = Config.Reload();
 
         _webSocketClient = new WebSocketClient();
@@ -22,6 +24,8 @@ public class Retech : IDisposable
         _webSocketClient.OnPacketReceived += OnPacketReceived;
 
         _ = _webSocketClient.ConnectAsync(new Uri(config.Worker));
+
+        Logger.Info($"Initialized Retech version {Constants.VERSION}");
     }
 
     public void Dispose()
