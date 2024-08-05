@@ -33,6 +33,8 @@ public class Retech : IDisposable
     public void OnConnected()
     {
         Logger.Info("Connected");
+
+        Features.SendHandshake.Execute(config.Token);
     }
 
     public async void OnDisconnected()
