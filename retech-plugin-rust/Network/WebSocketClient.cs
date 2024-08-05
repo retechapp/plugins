@@ -4,7 +4,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RetechLibrary.Network;
+namespace Retech.Network;
 
 public class WebSocketClient : IDisposable
 {

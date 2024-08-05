@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace RetechLibrary.Network;
+namespace Retech.Network;
 
 public class Packet
 {
