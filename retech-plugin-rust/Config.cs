@@ -10,7 +10,7 @@ public class Config
     public string Token = "YOUR_SERVER_TOKEN";
 
     [JsonProperty(PropertyName = "worker")]
-    public string Worker = "wss://eu1.worker.retech.app";
+    public string Worker = "wss://worker.retech.app";
 
     public static Config Reload()
     {

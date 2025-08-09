@@ -18,7 +18,7 @@ public class SendPlayerChat
         {
             Chat.ChatChannel.Team => "team",
             Chat.ChatChannel.Global => "global",
-            _ => "Other"
+            _ => "other"
         });
         packet.WriteString(message);
         Retech.Instance.SendPacket(packet);
