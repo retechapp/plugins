@@ -3,7 +3,7 @@ using Retech.Network;
 
 namespace Retech.Features;
 
-public class SendPlayerChat
+public class SendChat
 {
     public static void Execute(ulong steamId, Chat.ChatChannel targetChannel, string message)
     {
@@ -20,7 +20,7 @@ public class SendPlayerChat
             Chat.ChatChannel.Global => "global",
             _ => "other"
         });
-        packet.WriteString(message);
+        packet.WriteString(message.Substring(0, 4096));
         Retech.Instance.SendPacket(packet);
     }
 }

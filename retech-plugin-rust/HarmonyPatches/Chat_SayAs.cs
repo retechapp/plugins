@@ -8,7 +8,5 @@ namespace Retech.HarmonyPatches;
 public class Chat_SayAs
 {
     [HarmonyPostfix]
-    private static void Postfix(Chat.ChatChannel targetChannel, ulong userId, string username, string message) => Hook(userId, targetChannel, message);
-
-    public static void Hook(ulong userId, Chat.ChatChannel targetChannel, string message) => Features.SendPlayerChat.Execute(userId, targetChannel, message);
+    private static void Postfix(Chat.ChatChannel targetChannel, ulong userId, string username, string message) => Features.SendChat.Execute(userId, targetChannel, message);
 }
