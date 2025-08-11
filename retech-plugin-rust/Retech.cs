@@ -63,6 +63,10 @@ public class Retech : IDisposable
 
         switch (packetId)
         {
+            case 0x0001:
+                Logger.Info("Received handshake success response");
+                break;
+
             default:
                 Logger.Warning($"Received an unknown packet id: {packetId}");
                 break;

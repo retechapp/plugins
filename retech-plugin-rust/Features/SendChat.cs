@@ -1,3 +1,4 @@
+using System;
 using ConVar;
 using Retech.Network;
 
@@ -20,7 +21,7 @@ public class SendChat
             Chat.ChatChannel.Global => "global",
             _ => "other"
         });
-        packet.WriteString(message.Substring(0, 4096));
+        packet.WriteString(message.Substring(0, Math.Min(message.Length, 4096)));
         Retech.Instance.SendPacket(packet);
     }
 }
