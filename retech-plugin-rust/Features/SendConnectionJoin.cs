@@ -13,7 +13,7 @@ public class SendConnectionJoin
     packet.WriteUInt16(0x0001);
     packet.WriteUInt64(basePlayer.userID.Get());
     packet.WriteString(basePlayer.displayName);
-    packet.WriteString(basePlayer.Connection.ipaddress);
+    packet.WriteString(basePlayer.Connection.IPAddressWithoutPort());
     Retech.Instance.SendPacket(packet);
   }
 }
