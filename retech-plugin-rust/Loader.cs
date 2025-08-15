@@ -1,21 +1,37 @@
+using System.Threading;
+
 namespace Retech;
 
 public class Loader : IHarmonyModHooks
 {
+    public static Retech? Instance;
+
     public void OnLoaded(OnHarmonyModLoadedArgs args)
     {
-        if (Retech.Instance != null)
+        if (Volatile.Read(ref Instance) != null)
             return;
 
-        Retech.Instance = new Retech();
+        Retech created = null!;
+        try
+        {
+            created = new Retech();
+            Retech? prev = Interlocked.CompareExchange(ref Instance, created, null);
+            if (prev != null)
+                created.Dispose();
+        }
+        catch
+        {
+            try { created?.Dispose(); } catch { }
+            throw;
+        }
     }
 
     public void OnUnloaded(OnHarmonyModUnloadedArgs args)
     {
-        if (Retech.Instance == null)
+        Retech? instance = Interlocked.Exchange(ref Instance, null);
+        if (instance == null)
             return;
 
-        Retech.Instance.Dispose();
-        Retech.Instance = null;
+        try { instance.Dispose(); } catch { }
     }
 }

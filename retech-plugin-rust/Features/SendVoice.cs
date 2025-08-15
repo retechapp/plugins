@@ -7,7 +7,7 @@ public class SendVoice
 {
   public static void Execute(BasePlayer basePlayer, byte[] data)
   {
-    if (Retech.Instance == null)
+    if (Loader.Instance == null)
       return;
 
     PacketWriter packetWriter = new();
@@ -15,6 +15,6 @@ public class SendVoice
     packetWriter.WriteFloat(Time.time);
     packetWriter.WriteUInt64(basePlayer.userID.Get());
     packetWriter.WriteBytes(data);
-    Retech.Instance.Send(packetWriter);
+    Loader.Instance.Send(packetWriter);
   }
 }

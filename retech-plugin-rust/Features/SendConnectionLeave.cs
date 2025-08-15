@@ -6,12 +6,14 @@ public class SendConnectionLeave
 {
   public static void Execute(BasePlayer player)
   {
-    if (Retech.Instance == null)
+    if (Loader.Instance == null)
       return;
 
     PacketWriter packetWriter = new();
     packetWriter.WriteUInt16(0x0002);
     packetWriter.WriteUInt64(player.userID.Get());
-    Retech.Instance.Send(packetWriter);
+    Loader.Instance.Send(packetWriter);
+
+    SendPlayerTick.Disconnect(player.userID.Get());
   }
 }

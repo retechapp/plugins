@@ -6,7 +6,7 @@ public class SendConnectionJoin
 {
   public static void Execute(BasePlayer basePlayer)
   {
-    if (Retech.Instance == null)
+    if (Loader.Instance == null)
       return;
 
     PacketWriter packetWriter = new();
@@ -14,6 +14,6 @@ public class SendConnectionJoin
     packetWriter.WriteUInt64(basePlayer.userID.Get());
     packetWriter.WriteString(basePlayer.displayName);
     packetWriter.WriteString(basePlayer.Connection.IPAddressWithoutPort());
-    Retech.Instance.Send(packetWriter);
+    Loader.Instance.Send(packetWriter);
   }
 }

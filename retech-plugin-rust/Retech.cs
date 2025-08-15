@@ -1,102 +1,160 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Retech.Network;
-using UnityEngine;
 
 namespace Retech;
 
 public class Retech : IDisposable
 {
-    public static Retech? Instance = null;
-    public Config config;
+  private readonly Config _config;
+  private readonly TlsClient _tlsClient = new(true); // @TODO: Add fingerprint on self signed certs
+  private readonly SemaphoreSlim _connectGate = new(1, 1);
+  private readonly CancellationTokenSource _cancellationTokenSource = new();
 
-    private readonly TlsClient _tlsClient = new(true);
-    private int _reconnectCount = 0;
 
-    public Retech()
+  private volatile bool _disposed = false;
+  private volatile bool _connectedOrConnecting = false;
+  private int _connectionAttempts = 0;
+  private int _reconnectScheduled = 0;
+
+  public Retech()
+  {
+    _config = ConfigStore.LoadOrCreate(Constants.CONFIG_FILE);
+
+    _tlsClient.OnConnected += OnConnected;
+    _tlsClient.OnDisconnected += OnDisconnected;
+    _tlsClient.OnError += OnError;
+    _tlsClient.OnData += OnData;
+
+    _ = SafeConnectAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+  }
+
+  public void Dispose()
+  {
+    if (_disposed)
+      return;
+
+    try { _cancellationTokenSource.Cancel(); } catch { }
+    try { _tlsClient.Dispose(); } catch { }
+
+    _connectGate.Dispose();
+    _cancellationTokenSource.Dispose();
+  }
+
+  private async Task SafeConnectAsync(CancellationToken cancellationToken)
+  {
+    if (_disposed)
+      return;
+
+    await _connectGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+    try
     {
-        Logger.Setup();
+      if (_disposed || _connectedOrConnecting)
+        return;
 
-        config = Config.Reload();
-
-        _tlsClient.OnConnected += OnConnected;
-        _tlsClient.OnDisconnected += OnDisconnected;
-        _tlsClient.OnError += OnError;
-        _tlsClient.OnData += OnData;
-
-        Logger.Info($"Connecting to {config.WorkerHost}:{config.WorkerPort}");
-        _ = _tlsClient.ConnectAsync(config.WorkerHost, config.WorkerPort);
+      _connectedOrConnecting = true;
+      Logger.Info($"Connecting to {_config.Worker.Host}:{_config.Worker.Port}");
+      await _tlsClient.ConnectAsync(_config.Worker.Host, _config.Worker.Port).ConfigureAwait(false);
     }
-
-    public void Dispose()
+    catch (OperationCanceledException) { }
+    catch (Exception exception)
     {
-        _tlsClient.Disconnect();
-        Logger.Close();
+      Logger.Error("Connection failed.", exception);
+      _connectedOrConnecting = false;
+      ScheduleReconnect();
     }
-
-    public void OnConnected()
+    finally
     {
-        Logger.Info($"Connected with {config.WorkerHost}:{config.WorkerPort}");
-
-        _reconnectCount = 0;
-
-        Features.SendHandshake.Execute(config.Token);
+      _connectGate.Release();
     }
+  }
 
-    public void OnDisconnected()
+  private void ScheduleReconnect()
+  {
+    if (_disposed)
+      return;
+
+    if (Interlocked.Exchange(ref _reconnectScheduled, 1) == 1)
+      return;
+
+    int cappedAttemp = Math.Min(_connectionAttempts, 7);
+    double seconds = Math.Min(Math.Pow(2, cappedAttemp), 120);
+    int jitterMs = new Random().Next(0, 500);
+    TimeSpan delay = TimeSpan.FromSeconds(seconds).Add(TimeSpan.FromMilliseconds(jitterMs));
+
+    int attempt = _connectionAttempts + 1;
+    Logger.Info($"Scheduling reconenct attempt #{attempt} in {delay.TotalSeconds:F1} seconds");
+    CancellationToken cancellationToken = _cancellationTokenSource.Token;
+
+    _ = Task.Run(async () =>
     {
-        int reconnectSeconds = _reconnectCount switch
-        {
-            0 => 15,
-            1 => 20,
-            2 => 30,
-            3 => 60,
-            4 => 90,
-            _ => 120,
-        };
-        _reconnectCount++;
+      try
+      {
+        await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
 
-        Logger.Info($"Disconnected, reconnecting in {reconnectSeconds} seconds");
+        if (_disposed)
+          return;
 
-        _ = Task.Run(async () =>
-        {
-            await Task.Delay(reconnectSeconds * 1000);
-            Logger.Info($"Reconnecting to {config.WorkerHost}:{config.WorkerPort}");
-            await _tlsClient.ConnectAsync(config.WorkerHost, config.WorkerPort);
-        });
-    }
+        Interlocked.Exchange(ref _reconnectScheduled, 0);
+        Interlocked.Increment(ref _connectionAttempts);
+        await SafeConnectAsync(cancellationToken).ConfigureAwait(false);
+      }
+      catch (OperationCanceledException) { }
+      catch (Exception exception)
+      {
+        Interlocked.Exchange(ref _reconnectScheduled, 0);
+        Logger.Error("Reconnect attempt failed.", exception);
+        ScheduleReconnect();
+      }
+    }, cancellationToken);
+  }
 
-    public void OnError(Exception exception)
+  private void OnConnected()
+  {
+    _connectedOrConnecting = true;
+    Interlocked.Exchange(ref _connectionAttempts, 0);
+    Interlocked.Exchange(ref _reconnectScheduled, 0);
+    Logger.Info($"Connected to {_config.Worker.Host}:{_config.Worker.Port}");
+
+    Features.SendHandshake.Execute(_config.Token);
+  }
+
+  private void OnDisconnected()
+  {
+    _connectedOrConnecting = false;
+    Logger.Info($"Disconnected from the server");
+
+    if (!_disposed)
+      ScheduleReconnect();
+  }
+
+  private void OnError(Exception exception)
+  {
+    Logger.Error("A connection error occured.", exception);
+  }
+
+  private void OnData(byte[] data, int size)
+  {
+    PacketReader packetReader = new(data, size);
+    ushort packetId = packetReader.ReadUInt16();
+
+    switch (packetId)
     {
-        Logger.Error($"Network error: {exception.Message}", exception);
+      case 0x0000:
+        // @TODO: Handle packet
+        break;
+
+      case 0x0003:
+        // @TODO: Handle packet
+        break;
+
+      default:
+        Logger.Warning($"Received an unknown packet ID: {packetId}");
+        break;
     }
+  }
 
-    public void OnData(byte[] data, int size)
-    {
-        PacketReader packetReader = new PacketReader(data, size);
-        ushort packetId = packetReader.ReadUInt16();
-
-        switch (packetId)
-        {
-            case 0x0000:
-                byte success = packetReader.ReadByte();
-                if (success == 0x01)
-                    Logger.Info("Handshake success");
-                else
-                    Logger.Error("Handshake failed");
-                break;
-
-            case 0x0003:
-                string level = packetReader.ReadString();
-                string message = packetReader.ReadString();
-                Logger.Info($"[{level}] {message}");
-                break;
-
-            default:
-                Logger.Warning($"Received an unknown packet id: {packetId}");
-                break;
-        }
-    }
-
-    public void Send(PacketWriter packetWriter) => _tlsClient.Send(packetWriter);
+  public void Send(PacketWriter packetWriter) => _tlsClient.Send(packetWriter);
 }

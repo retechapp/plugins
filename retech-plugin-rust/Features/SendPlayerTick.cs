@@ -17,9 +17,9 @@ public class PlayerTickUpdate(float lastTime, Vector3 lastPosition, Vector3 last
 public class SendPlayerTick
 {
   private static Dictionary<ulong, PlayerTickUpdate> _playerTickUpdates = new();
-  public static void Execute(BasePlayer basePlayer, Message packet)
+  public static void Execute(BasePlayer basePlayer)
   {
-    if (Retech.Instance == null)
+    if (Loader.Instance == null)
       return;
 
     if (!_playerTickUpdates.TryGetValue(basePlayer.userID.Get(), out PlayerTickUpdate playerTickUpdate))
@@ -33,7 +33,7 @@ public class SendPlayerTick
       _playerTickUpdates.Add(basePlayer.userID.Get(), playerTickUpdate);
     }
 
-    if (Time.time - playerTickUpdate.LastTime < 0.5f)
+    if (Time.time - playerTickUpdate.LastTime < 2f)
       return;
 
     playerTickUpdate.LastTime = Time.time;
@@ -54,6 +54,8 @@ public class SendPlayerTick
     packetWriter.WriteFloat(playerTickUpdate.LastVelocity.x);
     packetWriter.WriteFloat(playerTickUpdate.LastVelocity.y);
     packetWriter.WriteFloat(playerTickUpdate.LastVelocity.z);
-    Retech.Instance.Send(packetWriter);
+    Loader.Instance.Send(packetWriter);
   }
+
+  public static void Disconnect(ulong userId) => _playerTickUpdates.Remove(userId);
 }

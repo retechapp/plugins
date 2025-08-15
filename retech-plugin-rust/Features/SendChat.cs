@@ -8,7 +8,7 @@ public class SendChat
 {
     public static void Execute(ulong steamId, Chat.ChatChannel targetChannel, string message)
     {
-        if (Retech.Instance == null)
+        if (Loader.Instance == null)
             return;
 
         PacketWriter packetWriter = new();
@@ -22,6 +22,6 @@ public class SendChat
             _ => "other"
         });
         packetWriter.WriteString(message.Substring(0, Math.Min(message.Length, 4096)));
-        Retech.Instance.Send(packetWriter);
+        Loader.Instance.Send(packetWriter);
     }
 }

@@ -7,7 +7,7 @@ public class SendPerformance
 {
   public static void Execute(Performance performance)
   {
-    if (Retech.Instance == null)
+    if (Loader.Instance == null)
       return;
 
     Performance.Tick current = Performance.current;
@@ -17,6 +17,6 @@ public class SendPerformance
     packetWriter.WriteFloat(Time.time);
     packetWriter.WriteUInt32((uint)current.frameRate);
     packetWriter.WriteUInt64((ulong)current.memoryUsageSystem);
-    Retech.Instance.Send(packetWriter);
+    Loader.Instance.Send(packetWriter);
   }
 }
