@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
-using Microsoft.SqlServer.Server;
 using Newtonsoft.Json;
 
 namespace Retech;
@@ -56,14 +55,15 @@ public static class ConfigStore
 {
   private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
   {
-    MissingMemberHandling = MissingMemberHandling.Ignore,
+    MissingMemberHandling = MissingMemberHandling.Error,
     DefaultValueHandling = DefaultValueHandling.Populate,
-    NullValueHandling = NullValueHandling.Ignore,
+    NullValueHandling = NullValueHandling.Include,
+    ObjectCreationHandling = ObjectCreationHandling.Auto,
     Formatting = Formatting.Indented,
   };
 
   private static readonly SemaphoreSlim _gate = new(1, 1);
-  private static Encoding _utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+  private static readonly Encoding _utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
 
   public static Config LoadOrCreate(string path)
   {
@@ -74,8 +74,8 @@ public static class ConfigStore
     {
       try
       {
-        using FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan);
-        using StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8, true);
+        using FileStream fileStream = new(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan);
+        using StreamReader streamReader = new(fileStream, Encoding.UTF8, true);
         string payload = streamReader.ReadToEnd();
         JsonConvert.PopulateObject(payload, config, _jsonSerializerSettings);
       }
@@ -87,10 +87,9 @@ public static class ConfigStore
     else
     {
       Logger.Info($"Config file '{path}' not found, creating new one with defaults.");
-      TrySave(config, path);
     }
 
-    // @TODO: Update config file when there is a newer version available?
+    TrySave(config, path);
 
     try { config.Validate(); }
     catch (Exception exception) { Logger.Error($"Invalid config '{path}'", exception); }

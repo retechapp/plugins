@@ -7,5 +7,5 @@ namespace Retech.HarmonyPatches;
 public class Performance_FPSTimer
 {
   [HarmonyPostfix]
-  private static void Postfix(Performance __instance) => SendPerformance.Execute(__instance);
+  private static void Postfix() => SendPerformance.Execute();
 }

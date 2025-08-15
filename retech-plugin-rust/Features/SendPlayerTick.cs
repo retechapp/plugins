@@ -19,7 +19,7 @@ public class SendPlayerTick
   private static Dictionary<ulong, PlayerTickUpdate> _playerTickUpdates = new();
   public static void Execute(BasePlayer basePlayer)
   {
-    if (Loader.Instance == null)
+    if (Loader.Instance == null || !Loader.Instance.Config.Features.PlayerTick)
       return;
 
     if (!_playerTickUpdates.TryGetValue(basePlayer.userID.Get(), out PlayerTickUpdate playerTickUpdate))

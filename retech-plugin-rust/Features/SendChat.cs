@@ -8,7 +8,7 @@ public class SendChat
 {
     public static void Execute(ulong steamId, Chat.ChatChannel targetChannel, string message)
     {
-        if (Loader.Instance == null)
+        if (Loader.Instance == null || !Loader.Instance.Config.Features.PlayerChat)
             return;
 
         PacketWriter packetWriter = new();

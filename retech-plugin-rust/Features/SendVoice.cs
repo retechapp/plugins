@@ -7,7 +7,7 @@ public class SendVoice
 {
   public static void Execute(BasePlayer basePlayer, byte[] data)
   {
-    if (Loader.Instance == null)
+    if (Loader.Instance == null || !Loader.Instance.Config.Features.PlayerVoice)
       return;
 
     PacketWriter packetWriter = new();

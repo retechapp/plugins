@@ -5,10 +5,17 @@ namespace Retech.Features;
 
 public class SendPerformance
 {
-  public static void Execute(Performance performance)
+  private static float _lastExecution;
+
+  public static void Execute()
   {
     if (Loader.Instance == null)
       return;
+
+    if (Time.time - _lastExecution < 2.5f)
+      return;
+
+    _lastExecution = Time.time;
 
     Performance.Tick current = Performance.current;
 

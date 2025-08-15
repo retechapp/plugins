@@ -7,7 +7,7 @@ namespace Retech;
 
 public class Retech : IDisposable
 {
-  private readonly Config _config;
+  public readonly Config Config;
   private readonly TlsClient _tlsClient = new(true); // @TODO: Add fingerprint on self signed certs
   private readonly SemaphoreSlim _connectGate = new(1, 1);
   private readonly CancellationTokenSource _cancellationTokenSource = new();
@@ -20,7 +20,7 @@ public class Retech : IDisposable
 
   public Retech()
   {
-    _config = ConfigStore.LoadOrCreate(Constants.CONFIG_FILE);
+    Config = ConfigStore.LoadOrCreate(Constants.CONFIG_FILE);
 
     _tlsClient.OnConnected += OnConnected;
     _tlsClient.OnDisconnected += OnDisconnected;
@@ -55,8 +55,8 @@ public class Retech : IDisposable
         return;
 
       _connectedOrConnecting = true;
-      Logger.Info($"Connecting to {_config.Worker.Host}:{_config.Worker.Port}");
-      await _tlsClient.ConnectAsync(_config.Worker.Host, _config.Worker.Port).ConfigureAwait(false);
+      Logger.Info($"Connecting to {Config.Worker.Host}:{Config.Worker.Port}");
+      await _tlsClient.ConnectAsync(Config.Worker.Host, Config.Worker.Port).ConfigureAwait(false);
     }
     catch (OperationCanceledException) { }
     catch (Exception exception)
@@ -116,9 +116,9 @@ public class Retech : IDisposable
     _connectedOrConnecting = true;
     Interlocked.Exchange(ref _connectionAttempts, 0);
     Interlocked.Exchange(ref _reconnectScheduled, 0);
-    Logger.Info($"Connected to {_config.Worker.Host}:{_config.Worker.Port}");
+    Logger.Info($"Connected to {Config.Worker.Host}:{Config.Worker.Port}");
 
-    Features.SendHandshake.Execute(_config.Token);
+    Features.SendHandshake.Execute(Config.Token);
   }
 
   private void OnDisconnected()
@@ -132,7 +132,11 @@ public class Retech : IDisposable
 
   private void OnError(Exception exception)
   {
+    _connectedOrConnecting = false;
     Logger.Error("A connection error occured.", exception);
+
+    if (!_disposed)
+      ScheduleReconnect();
   }
 
   private void OnData(byte[] data, int size)
@@ -143,11 +147,17 @@ public class Retech : IDisposable
     switch (packetId)
     {
       case 0x0000:
-        // @TODO: Handle packet
+        byte success = packetReader.ReadByte();
+        if (success == 0x01)
+          Logger.Info("Handshake success");
+        else
+          Logger.Error("Handshake failed");
         break;
 
       case 0x0003:
-        // @TODO: Handle packet
+        string level = packetReader.ReadString();
+        string message = packetReader.ReadString();
+        Logger.Info($"{level}: {message}");
         break;
 
       default:
