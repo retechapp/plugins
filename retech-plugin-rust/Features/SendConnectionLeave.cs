@@ -9,9 +9,9 @@ public class SendConnectionLeave
     if (Retech.Instance == null)
       return;
 
-    Packet packet = new();
-    packet.WriteUInt16(0x0002);
-    packet.WriteUInt64(player.userID.Get());
-    Retech.Instance.SendPacket(packet);
+    PacketWriter packetWriter = new();
+    packetWriter.WriteUInt16(0x0002);
+    packetWriter.WriteUInt64(player.userID.Get());
+    Retech.Instance.Send(packetWriter);
   }
 }

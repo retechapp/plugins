@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Retech.Network;
+using UnityEngine;
 
 namespace Retech;
 
@@ -9,7 +10,8 @@ public class Retech : IDisposable
     public static Retech? Instance = null;
     public Config config;
 
-    private readonly WebSocketClient? _webSocketClient;
+    private readonly TlsClient _tlsClient = new(true);
+    private int _reconnectCount = 0;
 
     public Retech()
     {
@@ -17,54 +19,77 @@ public class Retech : IDisposable
 
         config = Config.Reload();
 
-        _webSocketClient = new WebSocketClient();
-        _webSocketClient.OnConnected += OnConnected;
-        _webSocketClient.OnDisconnected += OnDisconnected;
-        _webSocketClient.OnError += OnError;
-        _webSocketClient.OnPacketReceived += OnPacketReceived;
+        _tlsClient.OnConnected += OnConnected;
+        _tlsClient.OnDisconnected += OnDisconnected;
+        _tlsClient.OnError += OnError;
+        _tlsClient.OnData += OnData;
 
-        _ = _webSocketClient.ConnectAsync(new Uri(config.Worker));
-
-        Logger.Info($"Initialized Retech version {Constants.VERSION}");
+        Logger.Info($"Connecting to {config.WorkerHost}:{config.WorkerPort}");
+        _ = _tlsClient.ConnectAsync(config.WorkerHost, config.WorkerPort);
     }
 
     public void Dispose()
     {
-        _webSocketClient?.Dispose();
+        _tlsClient.Disconnect();
         Logger.Close();
     }
 
     public void OnConnected()
     {
-        Logger.Info("Connected");
+        Logger.Info($"Connected with {config.WorkerHost}:{config.WorkerPort}");
+
+        _reconnectCount = 0;
 
         Features.SendHandshake.Execute(config.Token);
     }
 
-    public async void OnDisconnected()
+    public void OnDisconnected()
     {
-        if (_webSocketClient == null)
-            return;
+        int reconnectSeconds = _reconnectCount switch
+        {
+            0 => 15,
+            1 => 20,
+            2 => 30,
+            3 => 60,
+            4 => 90,
+            _ => 120,
+        };
+        _reconnectCount++;
 
-        Logger.Info("Disconnected (reconnecing in 15 seconds)");
+        Logger.Info($"Disconnected, reconnecting in {reconnectSeconds} seconds");
 
-        await Task.Delay(15_000);
-        await _webSocketClient.ConnectAsync(new Uri(config.Worker));
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(reconnectSeconds * 1000);
+            Logger.Info($"Reconnecting to {config.WorkerHost}:{config.WorkerPort}");
+            await _tlsClient.ConnectAsync(config.WorkerHost, config.WorkerPort);
+        });
     }
 
     public void OnError(Exception exception)
     {
-        Logger.Error("Network error", exception);
+        Logger.Error($"Network error: {exception.Message}", exception);
     }
 
-    public void OnPacketReceived(Packet packet)
+    public void OnData(byte[] data, int size)
     {
-        ushort packetId = packet.ReadUInt16();
+        PacketReader packetReader = new PacketReader(data, size);
+        ushort packetId = packetReader.ReadUInt16();
 
         switch (packetId)
         {
-            case 0x0001:
-                Logger.Info("Received handshake success response");
+            case 0x0000:
+                byte success = packetReader.ReadByte();
+                if (success == 0x01)
+                    Logger.Info("Handshake success");
+                else
+                    Logger.Error("Handshake failed");
+                break;
+
+            case 0x0003:
+                string level = packetReader.ReadString();
+                string message = packetReader.ReadString();
+                Logger.Info($"[{level}] {message}");
                 break;
 
             default:
@@ -73,11 +98,5 @@ public class Retech : IDisposable
         }
     }
 
-    public void SendPacket(Packet packet)
-    {
-        if (_webSocketClient == null)
-            return;
-
-        _ = _webSocketClient.SendAsync(packet);
-    }
+    public void Send(PacketWriter packetWriter) => _tlsClient.Send(packetWriter);
 }

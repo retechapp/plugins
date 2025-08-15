@@ -9,8 +9,11 @@ public class Config
     [JsonProperty(PropertyName = "token")]
     public string Token = "YOUR_SERVER_TOKEN";
 
-    [JsonProperty(PropertyName = "worker")]
-    public string Worker = "wss://worker.retech.app";
+    [JsonProperty(PropertyName = "workerHost")]
+    public string WorkerHost = "worker.retech.app";
+
+    [JsonProperty(PropertyName = "workerPort")]
+    public int WorkerPort = 8182;
 
     public static Config Reload()
     {

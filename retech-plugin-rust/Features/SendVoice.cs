@@ -10,11 +10,11 @@ public class SendVoice
     if (Retech.Instance == null)
       return;
 
-    Packet packet = new();
-    packet.WriteUInt16(0x0009);
-    packet.WriteFloat(Time.time);
-    packet.WriteUInt64(basePlayer.userID.Get());
-    packet.WriteBytes(data);
-    Retech.Instance.SendPacket(packet);
+    PacketWriter packetWriter = new();
+    packetWriter.WriteUInt16(0x0009);
+    packetWriter.WriteFloat(Time.time);
+    packetWriter.WriteUInt64(basePlayer.userID.Get());
+    packetWriter.WriteBytes(data);
+    Retech.Instance.Send(packetWriter);
   }
 }

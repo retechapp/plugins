@@ -11,17 +11,17 @@ public class SendChat
         if (Retech.Instance == null)
             return;
 
-        Packet packet = new();
-        packet.WriteUInt16(0x0008);
-        packet.WriteFloat(UnityEngine.Time.time);
-        packet.WriteUInt64(steamId);
-        packet.WriteString(targetChannel switch
+        PacketWriter packetWriter = new();
+        packetWriter.WriteUInt16(0x0008);
+        packetWriter.WriteFloat(UnityEngine.Time.time);
+        packetWriter.WriteUInt64(steamId);
+        packetWriter.WriteString(targetChannel switch
         {
             Chat.ChatChannel.Team => "team",
             Chat.ChatChannel.Global => "global",
             _ => "other"
         });
-        packet.WriteString(message.Substring(0, Math.Min(message.Length, 4096)));
-        Retech.Instance.SendPacket(packet);
+        packetWriter.WriteString(message.Substring(0, Math.Min(message.Length, 4096)));
+        Retech.Instance.Send(packetWriter);
     }
 }

@@ -9,11 +9,11 @@ public class SendConnectionJoin
     if (Retech.Instance == null)
       return;
 
-    Packet packet = new();
-    packet.WriteUInt16(0x0001);
-    packet.WriteUInt64(basePlayer.userID.Get());
-    packet.WriteString(basePlayer.displayName);
-    packet.WriteString(basePlayer.Connection.IPAddressWithoutPort());
-    Retech.Instance.SendPacket(packet);
+    PacketWriter packetWriter = new();
+    packetWriter.WriteUInt16(0x0001);
+    packetWriter.WriteUInt64(basePlayer.userID.Get());
+    packetWriter.WriteString(basePlayer.displayName);
+    packetWriter.WriteString(basePlayer.Connection.IPAddressWithoutPort());
+    Retech.Instance.Send(packetWriter);
   }
 }
