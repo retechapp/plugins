@@ -1,4 +1,5 @@
 using System.Threading;
+using Retech.Features;
 
 namespace Retech;
 
@@ -14,6 +15,8 @@ public class Loader : IHarmonyModHooks
         Retech created = null!;
         try
         {
+            PluginHandshake.Request("your_token_here");
+
             created = new Retech();
             Retech? prev = Interlocked.CompareExchange(ref Instance, created, null);
             if (prev != null)

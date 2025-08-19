@@ -1,17 +1,15 @@
-using System;
 using System.Collections.Generic;
-using Network;
 using Retech.Network;
 using UnityEngine;
 
 namespace Retech.Features;
 
-public class PlayerTickUpdate(float lastTime, Vector3 lastPosition, Vector3 lastRotation, Vector3 lastVelocity)
+public class PlayerTickUpdate(float lastTime, UnityEngine.Vector3 lastPosition, UnityEngine.Vector3 lastRotation, UnityEngine.Vector3 lastVelocity)
 {
   public float LastTime = lastTime;
-  public Vector3 LastPosition = lastPosition;
-  public Vector3 LastRotation = lastRotation;
-  public Vector3 LastVelocity = lastVelocity;
+  public UnityEngine.Vector3 LastPosition = lastPosition;
+  public UnityEngine.Vector3 LastRotation = lastRotation;
+  public UnityEngine.Vector3 LastVelocity = lastVelocity;
 }
 
 public class SendPlayerTick

@@ -7,19 +7,30 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <UnityManagedDir>$(ProjectDir).dependencies\RustDedicated_Data\Managed</UnityManagedDir>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\0Harmony.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\Assembly-CSharp.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\Assembly-CSharp-firstpass.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\Facepunch.Network.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\Facepunch.UnityEngine.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\Newtonsoft.Json.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\Rust.Harmony.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\UnityEngine.dll" />
-    <Reference Include=".dependencies\RustDedicated_Data\Managed\UnityEngine.CoreModule.dll" />
+    <Reference Include="$(UnityManagedDir)\0Harmony.dll" />
+    <Reference Include="$(UnityManagedDir)\Assembly-CSharp.dll" />
+    <Reference Include="$(UnityManagedDir)\Assembly-CSharp-firstpass.dll" />
+    <Reference Include="$(UnityManagedDir)\Facepunch.Network.dll" />
+    <Reference Include="$(UnityManagedDir)\Facepunch.UnityEngine.dll" />
+    <Reference Include="$(UnityManagedDir)\Newtonsoft.Json.dll" />
+    <Reference Include="$(UnityManagedDir)\Rust.Harmony.dll" />
+    <Reference Include="$(UnityManagedDir)\UnityEngine.dll" />
+    <Reference Include="$(UnityManagedDir)\UnityEngine.CoreModule.dll" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ILRepack" Version="2.0.44" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.32.0" PrivateAssets="all" />
   </ItemGroup>
+
+  <Target Name="ILRepack" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="~/.dotnet/tools/ilrepack /out:$(TargetDir)out/$(AssemblyName).dll $(TargetDir)$(AssemblyName).dll $(TargetDir)Google.Protobuf.dll /lib:$(TargetDir)" />
+  </Target>
 </Project>
