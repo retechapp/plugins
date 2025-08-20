@@ -362,6 +362,9 @@ public class TlsClient : IDisposable
             | (parseBuffer[cursor + 2] << 8)
             | parseBuffer[cursor + 3];
 
+          if (length < 0)
+            throw new IOException("Received frame length cannot be negative.");
+
           if (length > (uint)MaxFrameBytes)
             throw new IOException($"Received frame is too large ({length} > {MaxFrameBytes}).");
 
