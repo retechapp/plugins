@@ -296,9 +296,9 @@ public class TlsClient : IDisposable
           if (segment.Array != null)
             ArrayPool<byte>.Shared.Return(segment.Array);
         }
-
-        await sslStream.FlushAsync(cancellationToken).ConfigureAwait(false);
       }
+
+      await sslStream.FlushAsync(cancellationToken).ConfigureAwait(false);
     }
     catch (OperationCanceledException) { }
     catch (Exception exception)

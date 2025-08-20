@@ -24,23 +24,12 @@ public class Config
   }
 
   [JsonProperty("features")]
-  public FeaturesConfig Features { get; set; } = new FeaturesConfig
-  {
-    PlayerVoice = true,
-    ServerHealth = true,
-    PlayerChat = true,
-  };
+  public FeaturesConfig Features { get; set; } = new FeaturesConfig();
 
   public class FeaturesConfig
   {
     [JsonProperty("serverHealth")]
     public bool ServerHealth { get; set; } = true;
-
-    [JsonProperty("playerVoice")]
-    public bool PlayerVoice { get; set; } = true;
-
-    [JsonProperty("playerChat")]
-    public bool PlayerChat { get; set; } = true;
   }
 
   public void Validate()
@@ -61,7 +50,7 @@ public static class ConfigStore
   private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
   {
     MissingMemberHandling = MissingMemberHandling.Ignore,
-    DefaultValueHandling = DefaultValueHandling.Populate,
+    DefaultValueHandling = DefaultValueHandling.Include,
     NullValueHandling = NullValueHandling.Include,
     ObjectCreationHandling = ObjectCreationHandling.Auto,
     Formatting = Formatting.Indented,

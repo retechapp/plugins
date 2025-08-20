@@ -24,8 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ILRepack" Version="2.0.44" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
     <PackageReference Include="Google.Protobuf" Version="3.32.0" PrivateAssets="all" />
   </ItemGroup>
+
+  <Target Name="ILRepack" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="~/.dotnet/tools/ilrepack /out:$(TargetDir)out/$(AssemblyName).dll $(TargetDir)$(AssemblyName).dll $(TargetDir)Google.Protobuf.dll /lib:$(TargetDir)" />
+  </Target>
 </Project>

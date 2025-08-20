@@ -29,8 +29,8 @@ public class Retech : IDisposable
 
     PluginHandshake = new PluginHandshake(this);
 
-    // if (Config.Features.ServerHealth)
-    //   ServerHealth = new ServerHealth(this);
+    if (Config.Features.ServerHealth)
+      ServerHealth = new ServerHealth(this);
 
     _tlsClient.StartConnectionManager(Config.Worker.Host, Config.Worker.Port);
   }
