@@ -28,14 +28,8 @@ public class Config
 
   public class FeaturesConfig
   {
-    [JsonProperty("playerChat")]
-    public bool PlayerChat { get; set; } = true;
-
-    [JsonProperty("playerVoice")]
-    public bool PlayerVoice { get; set; } = true;
-
-    [JsonProperty("playerTick")]
-    public bool PlayerTick { get; set; } = true;
+    [JsonProperty("serverHealth")]
+    public bool ServerHealth { get; set; } = true;
   }
 
   public void Validate()
@@ -55,8 +49,8 @@ public static class ConfigStore
 {
   private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
   {
-    MissingMemberHandling = MissingMemberHandling.Error,
-    DefaultValueHandling = DefaultValueHandling.Populate,
+    MissingMemberHandling = MissingMemberHandling.Ignore,
+    DefaultValueHandling = DefaultValueHandling.Include,
     NullValueHandling = NullValueHandling.Include,
     ObjectCreationHandling = ObjectCreationHandling.Auto,
     Formatting = Formatting.Indented,
@@ -92,7 +86,10 @@ public static class ConfigStore
     TrySave(config, path);
 
     try { config.Validate(); }
-    catch (Exception exception) { Logger.Error($"Invalid config '{path}'", exception); }
+    catch (Exception exception)
+    {
+      Logger.Error($"Invalid config '{path}'", exception);
+    }
 
     return config;
   }

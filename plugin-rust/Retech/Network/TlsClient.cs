@@ -15,8 +15,10 @@ namespace Retech.Network;
 public class TlsClient : IDisposable
 {
   // Events
+  public event Action<string, int>? OnConnecting;
   public event Action? OnConnected;
   public event Action? OnDisconnected;
+  public event Action<double>? OnReconnectScheduled;
   public event Action<Exception>? OnError;
   public event Action<byte[], int>? OnData;
 
@@ -40,6 +42,10 @@ public class TlsClient : IDisposable
   private Task? _receiveLoopTask;
   private readonly object _gate = new();
   private volatile bool _running;
+  private Task? _connectionManagerTask;
+  private CancellationTokenSource? _connectionManagerCancellationTokenSource;
+  private string? _connectionManagerLastHost;
+  private int _connectionManagerLastPort;
 
   public bool IsConnected => _running && _tcpClient?.Connected == true;
 
@@ -61,9 +67,84 @@ public class TlsClient : IDisposable
     _sendQueue = new BlockingCollection<ArraySegment<byte>>(new ConcurrentQueue<ArraySegment<byte>>(), SendQueueCapacity);
   }
 
+  public Task StartConnectionManager(string host, int port, CancellationToken cancellationToken = default)
+  {
+    if (_connectionManagerTask != null && !_connectionManagerTask.IsCompleted)
+      return _connectionManagerTask;
+
+    _connectionManagerLastHost = host;
+    _connectionManagerLastPort = port;
+
+    _connectionManagerCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+    _connectionManagerTask = Task.Run(() => ConnectionManagerAsync(_connectionManagerCancellationTokenSource.Token));
+    return _connectionManagerTask;
+  }
+
+  public async Task StopConnectionManagerAsync()
+  {
+    try { _connectionManagerCancellationTokenSource?.Cancel(); } catch { }
+
+    await DisconnectAsync().ConfigureAwait(false);
+    Task? connectionManagerTask = _connectionManagerTask;
+    if (connectionManagerTask != null)
+      await Task.WhenAny(connectionManagerTask, Task.Delay(500)).ConfigureAwait(false);
+  }
+
+  private async Task ConnectionManagerAsync(CancellationToken cancellationToken)
+  {
+    if (_connectionManagerLastHost == null)
+      throw new InvalidOperationException("Connection manager has not been started with a host and port.");
+
+    int attempt = 0;
+    while (!cancellationToken.IsCancellationRequested)
+    {
+      try
+      {
+        await ConnectAsync(_connectionManagerLastHost, _connectionManagerLastPort, cancellationToken).ConfigureAwait(false);
+        attempt = 0;
+
+        Task? sendLoopTask = _sendLoopTask;
+        Task? receiveLoopTask = _receiveLoopTask;
+
+        if (sendLoopTask == null && receiveLoopTask == null)
+          await Task.Delay(100, cancellationToken).ConfigureAwait(false);
+        else
+          await Task.WhenAny(
+            Task.WhenAll(sendLoopTask ?? Task.CompletedTask, receiveLoopTask ?? Task.CompletedTask),
+            Task.Delay(Timeout.Infinite, cancellationToken)
+          ).ConfigureAwait(false);
+      }
+      catch (OperationCanceledException)
+      {
+        break;
+      }
+      catch (Exception exception)
+      {
+        OnErrorSafe(exception);
+      }
+      finally
+      {
+        try { await DisconnectAsync().ConfigureAwait(false); } catch { }
+      }
+
+      attempt++;
+
+      // 5s, 10s, 15s, 30s, 60s, 120s
+      double seconds = Math.Min(300, attempt <= 3 ? attempt * 5 : 15 * Math.Pow(2, attempt - 3));
+      TimeSpan delay = TimeSpan.FromSeconds(seconds);
+
+      OnReconnectScheduledSafe(seconds);
+
+      try { await Task.Delay(delay, cancellationToken).ConfigureAwait(false); }
+      catch (OperationCanceledException) { break; }
+    }
+  }
+
   public async Task ConnectAsync(string host, int port, CancellationToken linkCancellationToken = default)
   {
     await DisconnectAsync().ConfigureAwait(false);
+
+    OnConnectingSafe(host, port);
 
     _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(linkCancellationToken);
     CancellationToken cancellationToken = _cancellationTokenSource.Token;
@@ -141,12 +222,6 @@ public class TlsClient : IDisposable
     OnDisconnectedSafe();
   }
 
-  public bool Send(PacketWriter writer)
-  {
-    ArraySegment<byte> segment = writer.AsSegment();
-    return Send(segment.Array!, segment.Offset, segment.Count);
-  }
-
   public bool Send(byte[] payload, int offset, int count)
   {
     if (payload == null)
@@ -155,14 +230,12 @@ public class TlsClient : IDisposable
     if (offset < 0 || count < 0 || offset + count > payload.Length)
       throw new ArgumentOutOfRangeException();
 
-    // Frame: <length le4><payload><checksum zeros>
-    // byte[] framed = new byte[count + 8];
     byte[] buffer = ArrayPool<byte>.Shared.Rent(count + 8);
 
-    buffer[0] = (byte)count;
-    buffer[1] = (byte)(count >> 8);
-    buffer[2] = (byte)(count >> 16);
-    buffer[3] = (byte)(count >> 24);
+    buffer[0] = (byte)(count >> 24);
+    buffer[1] = (byte)(count >> 16);
+    buffer[2] = (byte)(count >> 8);
+    buffer[3] = (byte)count;
 
     Buffer.BlockCopy(payload, offset, buffer, 4, count);
 
@@ -223,9 +296,9 @@ public class TlsClient : IDisposable
           if (segment.Array != null)
             ArrayPool<byte>.Shared.Return(segment.Array);
         }
-
-        await sslStream.FlushAsync(cancellationToken).ConfigureAwait(false);
       }
+
+      await sslStream.FlushAsync(cancellationToken).ConfigureAwait(false);
     }
     catch (OperationCanceledException) { }
     catch (Exception exception)
@@ -249,6 +322,7 @@ public class TlsClient : IDisposable
     byte[] readBuffer = ArrayPool<byte>.Shared.Rent(ReceiveBufferSize);
     byte[] parseBuffer = ArrayPool<byte>.Shared.Rent(ReceiveBufferSize);
     int parseLength = 0;
+    bool remoteClosed = false;
 
     try
     {
@@ -256,7 +330,10 @@ public class TlsClient : IDisposable
       {
         int read = await sslStream.ReadAsync(readBuffer, 0, readBuffer.Length, cancellationToken).ConfigureAwait(false);
         if (read == 0)
+        {
+          remoteClosed = true;
           break;
+        }
 
         if (parseLength + read > parseBuffer.Length)
         {
@@ -280,29 +357,32 @@ public class TlsClient : IDisposable
           if (parseLength - cursor < 4)
             break;
 
-          uint length = parseBuffer[cursor]
-            | ((uint)parseBuffer[cursor + 1] << 8)
-            | ((uint)parseBuffer[cursor + 2] << 16)
-            | ((uint)parseBuffer[cursor + 3] << 24);
+          int length = (parseBuffer[cursor] << 24)
+            | (parseBuffer[cursor + 1] << 16)
+            | (parseBuffer[cursor + 2] << 8)
+            | parseBuffer[cursor + 3];
+
+          if (length < 0)
+            throw new IOException("Received frame length cannot be negative.");
 
           if (length > (uint)MaxFrameBytes)
             throw new IOException($"Received frame is too large ({length} > {MaxFrameBytes}).");
 
-          long total = 4L + length + 4L;
+          int total = 4 + length + 4;
           if (parseLength - cursor < total)
             break;
 
-          int chk = cursor + 4 + (int)length;
+          int chk = cursor + 4 + length;
           if ((parseBuffer[chk] | parseBuffer[chk + 1] | parseBuffer[chk + 2] | parseBuffer[chk + 3]) != 0)
             throw new IOException("Checksum must be zero.");
 
-          byte[] payload = new byte[length];
-          Buffer.BlockCopy(parseBuffer, cursor + 4, payload, 0, (int)length);
+          byte[] payload = ArrayPool<byte>.Shared.Rent(length);
+          Buffer.BlockCopy(parseBuffer, cursor + 4, payload, 0, length);
 
-          try { OnData?.Invoke(payload, (int)length); }
+          try { OnData?.Invoke(payload, length); }
           catch (Exception exception) { OnErrorSafe(exception); }
 
-          cursor += (int)total;
+          cursor += total;
         }
 
         if (cursor > 0)
@@ -323,6 +403,9 @@ public class TlsClient : IDisposable
     {
       ArrayPool<byte>.Shared.Return(readBuffer);
       ArrayPool<byte>.Shared.Return(parseBuffer);
+
+      if (remoteClosed && _running)
+        _ = Task.Run(() => DisconnectAsync());
     }
   }
 
@@ -338,6 +421,11 @@ public class TlsClient : IDisposable
     return sslPolicyErrors == SslPolicyErrors.None;
   }
 
+  private void OnConnectingSafe(string host, int port)
+  {
+    try { OnConnecting?.Invoke(host, port); } catch (Exception exception) { OnErrorSafe(exception); }
+  }
+
   private void OnConnectedSafe()
   {
     try { OnConnected?.Invoke(); } catch (Exception exception) { OnErrorSafe(exception); }
@@ -346,6 +434,11 @@ public class TlsClient : IDisposable
   private void OnDisconnectedSafe()
   {
     try { OnDisconnected?.Invoke(); } catch (Exception exception) { OnErrorSafe(exception); }
+  }
+
+  private void OnReconnectScheduledSafe(double seconds)
+  {
+    try { OnReconnectScheduled?.Invoke(seconds); } catch (Exception exception) { OnErrorSafe(exception); }
   }
 
   private void OnErrorSafe(Exception exception)

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+message Metadata {
+  int64 timestamp =1;
+  string correlation_id = 2;
+}
+
+message PluginSendEnvelope {
+  Metadata metadata = 1;
+
+  oneof payload {
+    PluginHandshakeEvent plugin_handshake_event = 10;
+    ServerHealthEvent server_health_event = 11;
+  }
+}
+
+message PluginReceiveEnvelope {
+  Metadata metadata = 1;
+
+  oneof payload {
+    PluginHandshakeResponse plugin_handshake_response = 10;
+  }
+}
+
+message PluginHandshakeEvent {
+  string game = 1;
+  string version = 2;
+  string token = 3;
+}
+
+message PluginHandshakeResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ServerHealthEvent {
+  int32 framerate = 1;
+}
