@@ -80,7 +80,7 @@ public class Retech : IDisposable
       return;
     }
 
-    ushort packetId = (ushort)((data[0] << 8) | data[1] & 0xFF);
+    ushort packetId = (ushort)((data[0] << 8) | (data[1] & 0xFF));
     try
     {
       switch (packetId)
