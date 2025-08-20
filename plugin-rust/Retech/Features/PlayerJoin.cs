@@ -1,0 +1,39 @@
+using Retech.Utils;
+
+namespace Retech.Features;
+
+public class PlayerJoin(Retech retech)
+{
+  private readonly Retech _retech = retech;
+
+  public void OnPlayerJoin(BasePlayer basePlayer)
+  {
+    _retech.Send(new PluginSendEnvelope
+    {
+      Metadata = new Metadata
+      {
+        Timestamp = TimeUtils.UnixTimeMilliseconds(),
+      },
+      PlayerJoinEvent = new PlayerJoinEvent
+      {
+        PlayerIdentifier = new PlayerIdentifier
+        {
+          Type = "steamid",
+          Identifier = basePlayer.UserIDString,
+        },
+        AdditionalPlayerIdentifiers = {
+          new PlayerIdentifier
+          {
+            Type = "displayname",
+            Identifier = basePlayer.displayName,
+          },
+          new PlayerIdentifier
+          {
+            Type = "ipaddress",
+            Identifier = basePlayer.Connection.IPAddressWithoutPort(),
+          },
+        }
+      }
+    });
+  }
+}

@@ -1,5 +1,16 @@
 syntax = "proto3";
 
+message PlayerIdentifier {
+  string type = 1;
+  string identifier = 2;
+}
+
+message Vector3 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
 message Metadata {
   int64 timestamp =1;
   string correlation_id = 2;
@@ -11,6 +22,11 @@ message PluginSendEnvelope {
   oneof payload {
     PluginHandshakeEvent plugin_handshake_event = 10;
     ServerHealthEvent server_health_event = 11;
+    PlayerVoiceEvent player_voice_event = 12;
+    PlayerChatEvent player_chat_event = 13;
+    PlayerJoinEvent player_join_event = 14;
+    PlayerLeaveEvent player_leave_event = 15;
+    PlayerTickEvent player_tick_event = 16;
   }
 }
 
@@ -35,4 +51,31 @@ message PluginHandshakeResponse {
 
 message ServerHealthEvent {
   int32 framerate = 1;
+}
+
+message PlayerVoiceEvent {
+  PlayerIdentifier player_identifier = 1;
+  bytes raw = 2;
+}
+
+message PlayerChatEvent {
+  PlayerIdentifier player_identifier = 1;
+  string channel = 2;
+  string message = 3;
+}
+
+message PlayerJoinEvent {
+  PlayerIdentifier player_identifier = 1;
+  repeated PlayerIdentifier additional_player_identifiers = 2;
+}
+
+message PlayerLeaveEvent {
+  PlayerIdentifier player_identifier = 1;
+}
+
+message PlayerTickEvent {
+  PlayerIdentifier player_identifier = 1;
+  Vector3 position = 2;
+  Vector3 rotation = 3;
+  Vector3 velocity = 4;
 }

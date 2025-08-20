@@ -13,8 +13,13 @@ public class Retech : IDisposable
   private volatile bool _disposed = false;
 
   // Features
-  readonly PluginHandshake? PluginHandshake;
-  readonly ServerHealth? ServerHealth;
+  public readonly PluginHandshake? PluginHandshake;
+  public readonly ServerHealth? ServerHealth;
+  public readonly PlayerVoice? PlayerVoice;
+  public readonly PlayerChat? PlayerChat;
+  public readonly Features.PlayerJoin? PlayerJoin;
+  public readonly PlayerLeave? PlayerLeave;
+  public readonly PlayerTick? PlayerTick;
 
   public Retech()
   {
@@ -31,6 +36,19 @@ public class Retech : IDisposable
 
     if (Config.Features.ServerHealth)
       ServerHealth = new ServerHealth(this);
+
+    if (Config.Features.PlayerVoice)
+      PlayerVoice = new PlayerVoice(this);
+
+    if (Config.Features.PlayerChat)
+      PlayerChat = new PlayerChat(this);
+
+    PlayerJoin = new Features.PlayerJoin(this);
+
+    PlayerLeave = new PlayerLeave(this);
+
+    if (Config.Features.PlayerTick)
+      PlayerTick = new PlayerTick(this);
 
     _tlsClient.StartConnectionManager(Config.Worker.Host, Config.Worker.Port);
   }

@@ -30,6 +30,15 @@ public class Config
   {
     [JsonProperty("serverHealth")]
     public bool ServerHealth { get; set; } = true;
+
+    [JsonProperty("playerVoice")]
+    public bool PlayerVoice { get; set; } = true;
+
+    [JsonProperty("playerChat")]
+    public bool PlayerChat { get; set; } = true;
+
+    [JsonProperty("playerTick")]
+    public bool PlayerTick { get; set; } = true;
   }
 
   public void Validate()
