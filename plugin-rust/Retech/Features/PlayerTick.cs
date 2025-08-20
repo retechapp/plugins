@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Retech.Utils;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ public class PlayerTick(Retech retech)
     public UnityEngine.Vector3 LastVelocity = lastVelocity;
   }
 
-  private static Dictionary<string, PlayerTickUpdate> _playerTickUpdates = [];
+  private static ConcurrentDictionary<string, PlayerTickUpdate> _playerTickUpdates = new();
 
   public void OnPlayerTick(BasePlayer basePlayer)
   {
@@ -29,7 +29,7 @@ public class PlayerTick(Retech retech)
         basePlayer.tickViewAngles,
         basePlayer.estimatedVelocity
       );
-      _playerTickUpdates.Add(basePlayer.UserIDString, playerTickUpdate);
+      _playerTickUpdates.TryAdd(basePlayer.UserIDString, playerTickUpdate);
     }
 
     if (Time.time - playerTickUpdate.LastTime < 2f)
@@ -77,6 +77,6 @@ public class PlayerTick(Retech retech)
 
   public void OnPlayerLeave(BasePlayer basePlayer)
   {
-    _playerTickUpdates.Remove(basePlayer.UserIDString);
+    _playerTickUpdates.TryRemove(basePlayer.UserIDString, out _);
   }
 }

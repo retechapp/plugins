@@ -29,7 +29,7 @@ public class PlayerChat(Retech retech)
           Chat.ChatChannel.Global => "global",
           _ => "other"
         },
-        Message = message.Substring(0, Math.Min(message.Length, 4096)),
+        Message = message.Length > 4096 ? message.Substring(0, 4096) : message,
       }
     });
   }
