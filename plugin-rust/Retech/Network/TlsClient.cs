@@ -272,7 +272,12 @@ public class TlsClient : IDisposable
     return false;
   }
 
-  public void Dispose() => Disconnect();
+  public void Dispose()
+  {
+    try { _connectionManagerCancellationTokenSource?.Cancel(); } catch { }
+
+    Disconnect();
+  }
 
   private async Task SendLoopAsync(CancellationToken cancellationToken)
   {
