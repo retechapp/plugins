@@ -16,7 +16,7 @@ public class PlayerLeave(Retech retech)
       },
       PlayerLeaveEvent = new PlayerLeaveEvent
       {
-        PlayerIdentifier = new PlayerIdentifier
+        PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
           Identifier = basePlayer.UserIDString,

@@ -16,7 +16,7 @@ public class PlayerJoin(Retech retech)
       },
       PlayerJoinEvent = new PlayerJoinEvent
       {
-        PlayerIdentifier = new PlayerIdentifier
+        PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
           Identifier = basePlayer.UserIDString,
