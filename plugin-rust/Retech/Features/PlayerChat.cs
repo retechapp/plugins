@@ -1,4 +1,3 @@
-using System;
 using ConVar;
 using Retech.Utils;
 
@@ -25,8 +24,12 @@ public class PlayerChat(Retech retech)
         },
         Channel = targetChannel switch
         {
-          Chat.ChatChannel.Team => "team",
           Chat.ChatChannel.Global => "global",
+          Chat.ChatChannel.Team => "team",
+          Chat.ChatChannel.Server => "server",
+          Chat.ChatChannel.Cards => "cards",
+          Chat.ChatChannel.Local => "local",
+          Chat.ChatChannel.Clan => "clan",
           _ => "other"
         },
         Message = message.Length > 4096 ? message.Substring(0, 4096) : message,
