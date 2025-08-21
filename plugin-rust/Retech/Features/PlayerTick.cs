@@ -48,7 +48,7 @@ public class PlayerTick(Retech retech)
       },
       PlayerTickEvent = new PlayerTickEvent
       {
-        PlayerIdentifier = new PlayerIdentifier
+        PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
           Identifier = basePlayer.UserIDString,

@@ -18,7 +18,7 @@ public class PlayerVoice(Retech retech)
       },
       PlayerVoiceEvent = new PlayerVoiceEvent
       {
-        PlayerIdentifier = new PlayerIdentifier
+        PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
           Identifier = basePlayer.UserIDString,

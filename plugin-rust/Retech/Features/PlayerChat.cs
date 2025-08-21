@@ -17,7 +17,7 @@ public class PlayerChat(Retech retech)
       },
       PlayerChatEvent = new PlayerChatEvent
       {
-        PlayerIdentifier = new PlayerIdentifier
+        PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
           Identifier = userId.ToString(),

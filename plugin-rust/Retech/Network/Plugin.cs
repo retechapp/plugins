@@ -41,19 +41,20 @@ public static partial class PluginReflection {
           "aGFrZUV2ZW50EgwKBGdhbWUYASABKAkSDwoHdmVyc2lvbhgCIAEoCRINCgV0",
           "b2tlbhgDIAEoCSI7ChdQbHVnaW5IYW5kc2hha2VSZXNwb25zZRIPCgdzdWNj",
           "ZXNzGAEgASgIEg8KB21lc3NhZ2UYAiABKAkiJgoRU2VydmVySGVhbHRoRXZl",
-          "bnQSEQoJZnJhbWVyYXRlGAEgASgFIk0KEFBsYXllclZvaWNlRXZlbnQSLAoR",
-          "cGxheWVyX2lkZW50aWZpZXIYASABKAsyES5QbGF5ZXJJZGVudGlmaWVyEgsK",
-          "A3JhdxgCIAEoDCJhCg9QbGF5ZXJDaGF0RXZlbnQSLAoRcGxheWVyX2lkZW50",
-          "aWZpZXIYASABKAsyES5QbGF5ZXJJZGVudGlmaWVyEg8KB2NoYW5uZWwYAiAB",
-          "KAkSDwoHbWVzc2FnZRgDIAEoCSJ5Cg9QbGF5ZXJKb2luRXZlbnQSLAoRcGxh",
-          "eWVyX2lkZW50aWZpZXIYASABKAsyES5QbGF5ZXJJZGVudGlmaWVyEjgKHWFk",
-          "ZGl0aW9uYWxfcGxheWVyX2lkZW50aWZpZXJzGAIgAygLMhEuUGxheWVySWRl",
-          "bnRpZmllciJAChBQbGF5ZXJMZWF2ZUV2ZW50EiwKEXBsYXllcl9pZGVudGlm",
-          "aWVyGAEgASgLMhEuUGxheWVySWRlbnRpZmllciKTAQoPUGxheWVyVGlja0V2",
-          "ZW50EiwKEXBsYXllcl9pZGVudGlmaWVyGAEgASgLMhEuUGxheWVySWRlbnRp",
-          "ZmllchIaCghwb3NpdGlvbhgCIAEoCzIILlZlY3RvcjMSGgoIcm90YXRpb24Y",
-          "AyABKAsyCC5WZWN0b3IzEhoKCHZlbG9jaXR5GAQgASgLMgguVmVjdG9yM2IG",
-          "cHJvdG8z"));
+          "bnQSEQoJZnJhbWVyYXRlGAEgASgFIlUKEFBsYXllclZvaWNlRXZlbnQSNAoZ",
+          "cHJpbWFyeV9wbGF5ZXJfaWRlbnRpZmllchgBIAEoCzIRLlBsYXllcklkZW50",
+          "aWZpZXISCwoDcmF3GAIgASgMImkKD1BsYXllckNoYXRFdmVudBI0Chlwcmlt",
+          "YXJ5X3BsYXllcl9pZGVudGlmaWVyGAEgASgLMhEuUGxheWVySWRlbnRpZmll",
+          "chIPCgdjaGFubmVsGAIgASgJEg8KB21lc3NhZ2UYAyABKAkigQEKD1BsYXll",
+          "ckpvaW5FdmVudBI0ChlwcmltYXJ5X3BsYXllcl9pZGVudGlmaWVyGAEgASgL",
+          "MhEuUGxheWVySWRlbnRpZmllchI4Ch1hZGRpdGlvbmFsX3BsYXllcl9pZGVu",
+          "dGlmaWVycxgCIAMoCzIRLlBsYXllcklkZW50aWZpZXIiSAoQUGxheWVyTGVh",
+          "dmVFdmVudBI0ChlwcmltYXJ5X3BsYXllcl9pZGVudGlmaWVyGAEgASgLMhEu",
+          "UGxheWVySWRlbnRpZmllciKbAQoPUGxheWVyVGlja0V2ZW50EjQKGXByaW1h",
+          "cnlfcGxheWVyX2lkZW50aWZpZXIYASABKAsyES5QbGF5ZXJJZGVudGlmaWVy",
+          "EhoKCHBvc2l0aW9uGAIgASgLMgguVmVjdG9yMxIaCghyb3RhdGlvbhgDIAEo",
+          "CzIILlZlY3RvcjMSGgoIdmVsb2NpdHkYBCABKAsyCC5WZWN0b3IzYgZwcm90",
+          "bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -65,11 +66,11 @@ public static partial class PluginReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::PluginHandshakeEvent), global::PluginHandshakeEvent.Parser, new[]{ "Game", "Version", "Token" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PluginHandshakeResponse), global::PluginHandshakeResponse.Parser, new[]{ "Success", "Message" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ServerHealthEvent), global::ServerHealthEvent.Parser, new[]{ "Framerate" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerVoiceEvent), global::PlayerVoiceEvent.Parser, new[]{ "PlayerIdentifier", "Raw" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerChatEvent), global::PlayerChatEvent.Parser, new[]{ "PlayerIdentifier", "Channel", "Message" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerJoinEvent), global::PlayerJoinEvent.Parser, new[]{ "PlayerIdentifier", "AdditionalPlayerIdentifiers" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerLeaveEvent), global::PlayerLeaveEvent.Parser, new[]{ "PlayerIdentifier" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerTickEvent), global::PlayerTickEvent.Parser, new[]{ "PlayerIdentifier", "Position", "Rotation", "Velocity" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerVoiceEvent), global::PlayerVoiceEvent.Parser, new[]{ "PrimaryPlayerIdentifier", "Raw" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerChatEvent), global::PlayerChatEvent.Parser, new[]{ "PrimaryPlayerIdentifier", "Channel", "Message" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerJoinEvent), global::PlayerJoinEvent.Parser, new[]{ "PrimaryPlayerIdentifier", "AdditionalPlayerIdentifiers" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerLeaveEvent), global::PlayerLeaveEvent.Parser, new[]{ "PrimaryPlayerIdentifier" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerTickEvent), global::PlayerTickEvent.Parser, new[]{ "PrimaryPlayerIdentifier", "Position", "Rotation", "Velocity" }, null, null, null, null)
         }));
   }
   #endregion
@@ -2450,7 +2451,7 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public PlayerVoiceEvent(PlayerVoiceEvent other) : this() {
-    playerIdentifier_ = other.playerIdentifier_ != null ? other.playerIdentifier_.Clone() : null;
+    primaryPlayerIdentifier_ = other.primaryPlayerIdentifier_ != null ? other.primaryPlayerIdentifier_.Clone() : null;
     raw_ = other.raw_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -2461,15 +2462,15 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
     return new PlayerVoiceEvent(this);
   }
 
-  /// <summary>Field number for the "player_identifier" field.</summary>
-  public const int PlayerIdentifierFieldNumber = 1;
-  private global::PlayerIdentifier playerIdentifier_;
+  /// <summary>Field number for the "primary_player_identifier" field.</summary>
+  public const int PrimaryPlayerIdentifierFieldNumber = 1;
+  private global::PlayerIdentifier primaryPlayerIdentifier_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::PlayerIdentifier PlayerIdentifier {
-    get { return playerIdentifier_; }
+  public global::PlayerIdentifier PrimaryPlayerIdentifier {
+    get { return primaryPlayerIdentifier_; }
     set {
-      playerIdentifier_ = value;
+      primaryPlayerIdentifier_ = value;
     }
   }
 
@@ -2500,7 +2501,7 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(PlayerIdentifier, other.PlayerIdentifier)) return false;
+    if (!object.Equals(PrimaryPlayerIdentifier, other.PrimaryPlayerIdentifier)) return false;
     if (Raw != other.Raw) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -2509,7 +2510,7 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (playerIdentifier_ != null) hash ^= PlayerIdentifier.GetHashCode();
+    if (primaryPlayerIdentifier_ != null) hash ^= PrimaryPlayerIdentifier.GetHashCode();
     if (Raw.Length != 0) hash ^= Raw.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -2529,9 +2530,9 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (Raw.Length != 0) {
       output.WriteRawTag(18);
@@ -2547,9 +2548,9 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (Raw.Length != 0) {
       output.WriteRawTag(18);
@@ -2565,8 +2566,8 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (playerIdentifier_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerIdentifier);
+    if (primaryPlayerIdentifier_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PrimaryPlayerIdentifier);
     }
     if (Raw.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeBytesSize(Raw);
@@ -2583,11 +2584,11 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
     if (other == null) {
       return;
     }
-    if (other.playerIdentifier_ != null) {
-      if (playerIdentifier_ == null) {
-        PlayerIdentifier = new global::PlayerIdentifier();
+    if (other.primaryPlayerIdentifier_ != null) {
+      if (primaryPlayerIdentifier_ == null) {
+        PrimaryPlayerIdentifier = new global::PlayerIdentifier();
       }
-      PlayerIdentifier.MergeFrom(other.PlayerIdentifier);
+      PrimaryPlayerIdentifier.MergeFrom(other.PrimaryPlayerIdentifier);
     }
     if (other.Raw.Length != 0) {
       Raw = other.Raw;
@@ -2612,10 +2613,10 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
@@ -2642,10 +2643,10 @@ public sealed partial class PlayerVoiceEvent : pb::IMessage<PlayerVoiceEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
@@ -2694,7 +2695,7 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public PlayerChatEvent(PlayerChatEvent other) : this() {
-    playerIdentifier_ = other.playerIdentifier_ != null ? other.playerIdentifier_.Clone() : null;
+    primaryPlayerIdentifier_ = other.primaryPlayerIdentifier_ != null ? other.primaryPlayerIdentifier_.Clone() : null;
     channel_ = other.channel_;
     message_ = other.message_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -2706,15 +2707,15 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
     return new PlayerChatEvent(this);
   }
 
-  /// <summary>Field number for the "player_identifier" field.</summary>
-  public const int PlayerIdentifierFieldNumber = 1;
-  private global::PlayerIdentifier playerIdentifier_;
+  /// <summary>Field number for the "primary_player_identifier" field.</summary>
+  public const int PrimaryPlayerIdentifierFieldNumber = 1;
+  private global::PlayerIdentifier primaryPlayerIdentifier_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::PlayerIdentifier PlayerIdentifier {
-    get { return playerIdentifier_; }
+  public global::PlayerIdentifier PrimaryPlayerIdentifier {
+    get { return primaryPlayerIdentifier_; }
     set {
-      playerIdentifier_ = value;
+      primaryPlayerIdentifier_ = value;
     }
   }
 
@@ -2757,7 +2758,7 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(PlayerIdentifier, other.PlayerIdentifier)) return false;
+    if (!object.Equals(PrimaryPlayerIdentifier, other.PrimaryPlayerIdentifier)) return false;
     if (Channel != other.Channel) return false;
     if (Message != other.Message) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -2767,7 +2768,7 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (playerIdentifier_ != null) hash ^= PlayerIdentifier.GetHashCode();
+    if (primaryPlayerIdentifier_ != null) hash ^= PrimaryPlayerIdentifier.GetHashCode();
     if (Channel.Length != 0) hash ^= Channel.GetHashCode();
     if (Message.Length != 0) hash ^= Message.GetHashCode();
     if (_unknownFields != null) {
@@ -2788,9 +2789,9 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (Channel.Length != 0) {
       output.WriteRawTag(18);
@@ -2810,9 +2811,9 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (Channel.Length != 0) {
       output.WriteRawTag(18);
@@ -2832,8 +2833,8 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (playerIdentifier_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerIdentifier);
+    if (primaryPlayerIdentifier_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PrimaryPlayerIdentifier);
     }
     if (Channel.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Channel);
@@ -2853,11 +2854,11 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
     if (other == null) {
       return;
     }
-    if (other.playerIdentifier_ != null) {
-      if (playerIdentifier_ == null) {
-        PlayerIdentifier = new global::PlayerIdentifier();
+    if (other.primaryPlayerIdentifier_ != null) {
+      if (primaryPlayerIdentifier_ == null) {
+        PrimaryPlayerIdentifier = new global::PlayerIdentifier();
       }
-      PlayerIdentifier.MergeFrom(other.PlayerIdentifier);
+      PrimaryPlayerIdentifier.MergeFrom(other.PrimaryPlayerIdentifier);
     }
     if (other.Channel.Length != 0) {
       Channel = other.Channel;
@@ -2885,10 +2886,10 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
@@ -2919,10 +2920,10 @@ public sealed partial class PlayerChatEvent : pb::IMessage<PlayerChatEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
@@ -2975,7 +2976,7 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public PlayerJoinEvent(PlayerJoinEvent other) : this() {
-    playerIdentifier_ = other.playerIdentifier_ != null ? other.playerIdentifier_.Clone() : null;
+    primaryPlayerIdentifier_ = other.primaryPlayerIdentifier_ != null ? other.primaryPlayerIdentifier_.Clone() : null;
     additionalPlayerIdentifiers_ = other.additionalPlayerIdentifiers_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -2986,15 +2987,15 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
     return new PlayerJoinEvent(this);
   }
 
-  /// <summary>Field number for the "player_identifier" field.</summary>
-  public const int PlayerIdentifierFieldNumber = 1;
-  private global::PlayerIdentifier playerIdentifier_;
+  /// <summary>Field number for the "primary_player_identifier" field.</summary>
+  public const int PrimaryPlayerIdentifierFieldNumber = 1;
+  private global::PlayerIdentifier primaryPlayerIdentifier_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::PlayerIdentifier PlayerIdentifier {
-    get { return playerIdentifier_; }
+  public global::PlayerIdentifier PrimaryPlayerIdentifier {
+    get { return primaryPlayerIdentifier_; }
     set {
-      playerIdentifier_ = value;
+      primaryPlayerIdentifier_ = value;
     }
   }
 
@@ -3024,7 +3025,7 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(PlayerIdentifier, other.PlayerIdentifier)) return false;
+    if (!object.Equals(PrimaryPlayerIdentifier, other.PrimaryPlayerIdentifier)) return false;
     if(!additionalPlayerIdentifiers_.Equals(other.additionalPlayerIdentifiers_)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -3033,7 +3034,7 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (playerIdentifier_ != null) hash ^= PlayerIdentifier.GetHashCode();
+    if (primaryPlayerIdentifier_ != null) hash ^= PrimaryPlayerIdentifier.GetHashCode();
     hash ^= additionalPlayerIdentifiers_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -3053,9 +3054,9 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     additionalPlayerIdentifiers_.WriteTo(output, _repeated_additionalPlayerIdentifiers_codec);
     if (_unknownFields != null) {
@@ -3068,9 +3069,9 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     additionalPlayerIdentifiers_.WriteTo(ref output, _repeated_additionalPlayerIdentifiers_codec);
     if (_unknownFields != null) {
@@ -3083,8 +3084,8 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (playerIdentifier_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerIdentifier);
+    if (primaryPlayerIdentifier_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PrimaryPlayerIdentifier);
     }
     size += additionalPlayerIdentifiers_.CalculateSize(_repeated_additionalPlayerIdentifiers_codec);
     if (_unknownFields != null) {
@@ -3099,11 +3100,11 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
     if (other == null) {
       return;
     }
-    if (other.playerIdentifier_ != null) {
-      if (playerIdentifier_ == null) {
-        PlayerIdentifier = new global::PlayerIdentifier();
+    if (other.primaryPlayerIdentifier_ != null) {
+      if (primaryPlayerIdentifier_ == null) {
+        PrimaryPlayerIdentifier = new global::PlayerIdentifier();
       }
-      PlayerIdentifier.MergeFrom(other.PlayerIdentifier);
+      PrimaryPlayerIdentifier.MergeFrom(other.PrimaryPlayerIdentifier);
     }
     additionalPlayerIdentifiers_.Add(other.additionalPlayerIdentifiers_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -3126,10 +3127,10 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
@@ -3156,10 +3157,10 @@ public sealed partial class PlayerJoinEvent : pb::IMessage<PlayerJoinEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
@@ -3208,7 +3209,7 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public PlayerLeaveEvent(PlayerLeaveEvent other) : this() {
-    playerIdentifier_ = other.playerIdentifier_ != null ? other.playerIdentifier_.Clone() : null;
+    primaryPlayerIdentifier_ = other.primaryPlayerIdentifier_ != null ? other.primaryPlayerIdentifier_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -3218,15 +3219,15 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
     return new PlayerLeaveEvent(this);
   }
 
-  /// <summary>Field number for the "player_identifier" field.</summary>
-  public const int PlayerIdentifierFieldNumber = 1;
-  private global::PlayerIdentifier playerIdentifier_;
+  /// <summary>Field number for the "primary_player_identifier" field.</summary>
+  public const int PrimaryPlayerIdentifierFieldNumber = 1;
+  private global::PlayerIdentifier primaryPlayerIdentifier_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::PlayerIdentifier PlayerIdentifier {
-    get { return playerIdentifier_; }
+  public global::PlayerIdentifier PrimaryPlayerIdentifier {
+    get { return primaryPlayerIdentifier_; }
     set {
-      playerIdentifier_ = value;
+      primaryPlayerIdentifier_ = value;
     }
   }
 
@@ -3245,7 +3246,7 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(PlayerIdentifier, other.PlayerIdentifier)) return false;
+    if (!object.Equals(PrimaryPlayerIdentifier, other.PrimaryPlayerIdentifier)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -3253,7 +3254,7 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (playerIdentifier_ != null) hash ^= PlayerIdentifier.GetHashCode();
+    if (primaryPlayerIdentifier_ != null) hash ^= PrimaryPlayerIdentifier.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -3272,9 +3273,9 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -3286,9 +3287,9 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -3300,8 +3301,8 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (playerIdentifier_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerIdentifier);
+    if (primaryPlayerIdentifier_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PrimaryPlayerIdentifier);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -3315,11 +3316,11 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
     if (other == null) {
       return;
     }
-    if (other.playerIdentifier_ != null) {
-      if (playerIdentifier_ == null) {
-        PlayerIdentifier = new global::PlayerIdentifier();
+    if (other.primaryPlayerIdentifier_ != null) {
+      if (primaryPlayerIdentifier_ == null) {
+        PrimaryPlayerIdentifier = new global::PlayerIdentifier();
       }
-      PlayerIdentifier.MergeFrom(other.PlayerIdentifier);
+      PrimaryPlayerIdentifier.MergeFrom(other.PrimaryPlayerIdentifier);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -3341,10 +3342,10 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
       }
@@ -3367,10 +3368,10 @@ public sealed partial class PlayerLeaveEvent : pb::IMessage<PlayerLeaveEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
       }
@@ -3415,7 +3416,7 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public PlayerTickEvent(PlayerTickEvent other) : this() {
-    playerIdentifier_ = other.playerIdentifier_ != null ? other.playerIdentifier_.Clone() : null;
+    primaryPlayerIdentifier_ = other.primaryPlayerIdentifier_ != null ? other.primaryPlayerIdentifier_.Clone() : null;
     position_ = other.position_ != null ? other.position_.Clone() : null;
     rotation_ = other.rotation_ != null ? other.rotation_.Clone() : null;
     velocity_ = other.velocity_ != null ? other.velocity_.Clone() : null;
@@ -3428,15 +3429,15 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
     return new PlayerTickEvent(this);
   }
 
-  /// <summary>Field number for the "player_identifier" field.</summary>
-  public const int PlayerIdentifierFieldNumber = 1;
-  private global::PlayerIdentifier playerIdentifier_;
+  /// <summary>Field number for the "primary_player_identifier" field.</summary>
+  public const int PrimaryPlayerIdentifierFieldNumber = 1;
+  private global::PlayerIdentifier primaryPlayerIdentifier_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::PlayerIdentifier PlayerIdentifier {
-    get { return playerIdentifier_; }
+  public global::PlayerIdentifier PrimaryPlayerIdentifier {
+    get { return primaryPlayerIdentifier_; }
     set {
-      playerIdentifier_ = value;
+      primaryPlayerIdentifier_ = value;
     }
   }
 
@@ -3491,7 +3492,7 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(PlayerIdentifier, other.PlayerIdentifier)) return false;
+    if (!object.Equals(PrimaryPlayerIdentifier, other.PrimaryPlayerIdentifier)) return false;
     if (!object.Equals(Position, other.Position)) return false;
     if (!object.Equals(Rotation, other.Rotation)) return false;
     if (!object.Equals(Velocity, other.Velocity)) return false;
@@ -3502,7 +3503,7 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (playerIdentifier_ != null) hash ^= PlayerIdentifier.GetHashCode();
+    if (primaryPlayerIdentifier_ != null) hash ^= PrimaryPlayerIdentifier.GetHashCode();
     if (position_ != null) hash ^= Position.GetHashCode();
     if (rotation_ != null) hash ^= Rotation.GetHashCode();
     if (velocity_ != null) hash ^= Velocity.GetHashCode();
@@ -3524,9 +3525,9 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (position_ != null) {
       output.WriteRawTag(18);
@@ -3550,9 +3551,9 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (playerIdentifier_ != null) {
+    if (primaryPlayerIdentifier_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerIdentifier);
+      output.WriteMessage(PrimaryPlayerIdentifier);
     }
     if (position_ != null) {
       output.WriteRawTag(18);
@@ -3576,8 +3577,8 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (playerIdentifier_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerIdentifier);
+    if (primaryPlayerIdentifier_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PrimaryPlayerIdentifier);
     }
     if (position_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
@@ -3600,11 +3601,11 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
     if (other == null) {
       return;
     }
-    if (other.playerIdentifier_ != null) {
-      if (playerIdentifier_ == null) {
-        PlayerIdentifier = new global::PlayerIdentifier();
+    if (other.primaryPlayerIdentifier_ != null) {
+      if (primaryPlayerIdentifier_ == null) {
+        PrimaryPlayerIdentifier = new global::PlayerIdentifier();
       }
-      PlayerIdentifier.MergeFrom(other.PlayerIdentifier);
+      PrimaryPlayerIdentifier.MergeFrom(other.PrimaryPlayerIdentifier);
     }
     if (other.position_ != null) {
       if (position_ == null) {
@@ -3644,10 +3645,10 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
@@ -3691,10 +3692,10 @@ public sealed partial class PlayerTickEvent : pb::IMessage<PlayerTickEvent>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          if (playerIdentifier_ == null) {
-            PlayerIdentifier = new global::PlayerIdentifier();
+          if (primaryPlayerIdentifier_ == null) {
+            PrimaryPlayerIdentifier = new global::PlayerIdentifier();
           }
-          input.ReadMessage(PlayerIdentifier);
+          input.ReadMessage(PrimaryPlayerIdentifier);
           break;
         }
         case 18: {
