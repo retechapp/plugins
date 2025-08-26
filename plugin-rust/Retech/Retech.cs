@@ -20,6 +20,7 @@ public class Retech : IDisposable
   public readonly Features.PlayerJoin? PlayerJoin;
   public readonly PlayerLeave? PlayerLeave;
   public readonly PlayerTick? PlayerTick;
+  public readonly ServerPlayerSync? ServerPlayerSync;
 
   public Retech()
   {
@@ -50,7 +51,11 @@ public class Retech : IDisposable
     if (Config.Features.PlayerTick)
       PlayerTick = new PlayerTick(this);
 
+    ServerPlayerSync = new ServerPlayerSync(this);
+
     _tlsClient.StartConnectionManager(Config.Worker.Host, Config.Worker.Port);
+
+    Logger.Log(Logger.LogLevel.Info, "INIT", $"Retech {Constants.VERSION} started");
   }
 
   public void Dispose()
@@ -109,6 +114,11 @@ public class Retech : IDisposable
           {
             case PluginReceiveEnvelope.PayloadOneofCase.PluginHandshakeResponse:
               PluginHandshake?.OnPluginHandshakeResponse(pluginReceiveEnvelope.Metadata, pluginReceiveEnvelope.PluginHandshakeResponse);
+              ServerPlayerSync?.SendPlayerSync();
+              break;
+
+            case PluginReceiveEnvelope.PayloadOneofCase.ServerPlayerSyncResponse:
+              ServerPlayerSync?.OnPlayerSyncResponse();
               break;
 
             default:

@@ -19,7 +19,7 @@ public class PlayerLeave(Retech retech)
         PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
-          Identifier = basePlayer.UserIDString,
+          Value = basePlayer.UserIDString,
         },
       }
     });

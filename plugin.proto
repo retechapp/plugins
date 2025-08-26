@@ -27,6 +27,7 @@ message PluginSendEnvelope {
     PlayerJoinEvent player_join_event = 14;
     PlayerLeaveEvent player_leave_event = 15;
     PlayerTickEvent player_tick_event = 16;
+    ServerPlayerSyncEvent server_player_sync_event = 17;
   }
 }
 
@@ -35,6 +36,7 @@ message PluginReceiveEnvelope {
 
   oneof payload {
     PluginHandshakeResponse plugin_handshake_response = 10;
+    ServerPlayerSyncResponse server_player_sync_response = 11;
   }
 }
 
@@ -78,4 +80,17 @@ message PlayerTickEvent {
   Vector3 position = 2;
   Vector3 rotation = 3;
   Vector3 velocity = 4;
+}
+
+message ServerPlayerSyncResponse {
+  int32 chunks = 1;
+}
+
+message ServerPlayerSyncEvent {
+  message Player {
+    PlayerIdentifier primary_player_identifier = 1;
+    repeated PlayerIdentifier additional_player_identifiers = 2;
+  }
+
+  repeated Player players = 1;
 }

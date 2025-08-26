@@ -19,18 +19,18 @@ public class PlayerJoin(Retech retech)
         PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
-          Identifier = basePlayer.UserIDString,
+          Value = basePlayer.UserIDString,
         },
         AdditionalPlayerIdentifiers = {
           new PlayerIdentifier
           {
             Type = "displayname",
-            Identifier = basePlayer.displayName,
+            Value = basePlayer.displayName,
           },
           new PlayerIdentifier
           {
             Type = "ipaddress",
-            Identifier = basePlayer.Connection.IPAddressWithoutPort(),
+            Value = basePlayer.Connection.IPAddressWithoutPort(),
           },
         }
       }
