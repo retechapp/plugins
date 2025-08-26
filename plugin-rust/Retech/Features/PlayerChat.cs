@@ -20,7 +20,7 @@ public class PlayerChat(Retech retech)
         PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
-          Identifier = userId.ToString(),
+          Value = userId.ToString(),
         },
         Channel = targetChannel switch
         {

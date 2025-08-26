@@ -15,6 +15,7 @@
     <Reference Include="$(UnityManagedDir)\0Harmony.dll" />
     <Reference Include="$(UnityManagedDir)\Assembly-CSharp.dll" />
     <Reference Include="$(UnityManagedDir)\Assembly-CSharp-firstpass.dll" />
+    <Reference Include="$(UnityManagedDir)\Facepunch.System.dll" />
     <Reference Include="$(UnityManagedDir)\Facepunch.Network.dll" />
     <Reference Include="$(UnityManagedDir)\Facepunch.UnityEngine.dll" />
     <Reference Include="$(UnityManagedDir)\Newtonsoft.Json.dll" />

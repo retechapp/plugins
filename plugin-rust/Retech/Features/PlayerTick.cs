@@ -51,7 +51,7 @@ public class PlayerTick(Retech retech)
         PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
-          Identifier = basePlayer.UserIDString,
+          Value = basePlayer.UserIDString,
         },
         Position = new Vector3
         {

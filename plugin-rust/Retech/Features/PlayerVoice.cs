@@ -21,7 +21,7 @@ public class PlayerVoice(Retech retech)
         PrimaryPlayerIdentifier = new PlayerIdentifier
         {
           Type = "steamid",
-          Identifier = basePlayer.UserIDString,
+          Value = basePlayer.UserIDString,
         },
         Raw = ByteString.CopyFrom(data),
       }
